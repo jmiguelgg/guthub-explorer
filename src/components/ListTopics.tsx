@@ -1,6 +1,6 @@
-import { useQuery } from "@apollo/client";
 import React from "react";
-import { ITopic } from "../models/Topic";
+import { useQuery } from "@apollo/client";
+import { TopicRequest, TopicResponse } from "../models/Topic";
 import { GET_TOPICS } from "../querys/topics";
 import Spinner from "./Spinner";
 import Topic from "./Topic";
@@ -10,18 +10,28 @@ interface ListTopicsProps {
 }
 
 const ListTopics = ({ searchTerm }: ListTopicsProps): JSX.Element => {
-  const { loading, error, data } = useQuery(GET_TOPICS, {
-    variables: { name: searchTerm },
-  });
+  const { loading, error, data } = useQuery<TopicResponse, TopicRequest>(
+    GET_TOPICS,
+    {
+      variables: { name: searchTerm },
+    }
+  );
 
   if (loading) return <Spinner />;
   else if (error) return <p>An error occurred with the request</p>;
-  else if (data.topic === null || data.topic.relatedTopics.length === 0) {
+  else if (
+    data &&
+    (data.topic === null || data.topic.relatedTopics.length === 0)
+  ) {
     return <p>No results found</p>;
   } else {
-    return data.topic.relatedTopics.map((topic: ITopic, index: number) => (
-      <Topic key={`${topic.name}-${index}`} data={topic} />
-    ));
+    return (
+      <>
+        {data?.topic?.relatedTopics.map((topic, index) => (
+          <Topic key={`${topic.name}-${index}`} data={topic} />
+        ))}
+      </>
+    );
   }
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ListTopics from '../components/ListTopics';
+import './styles/Home.css';
 
 const defaultSearchTerm = 'react';
 
@@ -12,9 +13,11 @@ const Home = (): JSX.Element => {
   };
   
   return (
-    <div>
+    <div className='root'>
       <input placeholder='Search term' value={searchTopic} onChange={hadleSearchTerm} />
-      <ListTopics searchTerm={searchTopic} />
+      <div className='infoContainer'>
+        <ListTopics searchTerm={searchTopic} />
+      </div>
     </div>
   );
 };

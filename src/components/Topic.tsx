@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ITopic } from "../models/Topic";
 import ListTopics from "./ListTopics";
-import "./styles/Topic.css";
+import { Row, Topic as STopic, Text, TipicContainer } from "./styles/Topic";
 
 interface TopicProps {
   data: ITopic;
@@ -15,21 +15,13 @@ const Topic = ({ data }: TopicProps): JSX.Element => {
   };
 
   return (
-    <>
-      <div
-        className="rowContainer"
-        style={{ backgroundColor: open ? "rgba(141, 246, 222, 0.6)" : "white" }}
-        onClick={toggle}
-      >
-        <p className="name">{data.name}</p>
-        <p>Stargazers: {data.stargazerCount}</p>
-      </div>
-      {open && (
-        <div className="subList">
-          <ListTopics searchTerm={data.name} />
-        </div>
-      )}
-    </>
+    <TipicContainer>
+      <Row isSelected={open} onClick={toggle}>
+        <STopic>{data.name}</STopic>
+        <Text>Stargazers: {data.stargazerCount}</Text>
+      </Row>
+      {open && <ListTopics searchTerm={data.name} />}
+    </TipicContainer>
   );
 };
 

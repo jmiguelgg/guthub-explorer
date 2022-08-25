@@ -2,8 +2,9 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { TopicRequest, TopicResponse } from "../models/Topic";
 import { GET_TOPICS } from "../querys/topics";
-import Spinner from "./Spinner";
-import Topic from "./Topic";
+import {Spinner} from "./styles/Spinner";
+import {SubList, Text} from './styles/Topic';
+import Topic from './Topic';
 
 interface ListTopicsProps {
   searchTerm: string;
@@ -18,19 +19,19 @@ const ListTopics = ({ searchTerm }: ListTopicsProps): JSX.Element => {
   );
 
   if (loading) return <Spinner />;
-  else if (error) return <p>An error occurred with the request</p>;
+  else if (error) return <Text>An error occurred with the request</Text>;
   else if (
     data &&
     (data.topic === null || data.topic.relatedTopics.length === 0)
   ) {
-    return <p>No results found</p>;
+    return <Text>No results found</Text>;
   } else {
     return (
-      <>
+      <SubList>
         {data?.topic?.relatedTopics.map((topic, index) => (
           <Topic key={`${topic.name}-${index}`} data={topic} />
         ))}
-      </>
+      </SubList>
     );
   }
 };

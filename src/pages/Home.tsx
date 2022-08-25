@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ListTopics from '../components/ListTopics';
-import './styles/Home.css';
+import { InfoContainer, Input, Root } from './styles/Home';
 
 const defaultSearchTerm = 'react';
 
@@ -13,12 +13,12 @@ const Home = (): JSX.Element => {
   };
   
   return (
-    <div className='root'>
-      <input placeholder='Search term' value={searchTopic} onChange={hadleSearchTerm} />
-      <div className='infoContainer'>
+    <Root>
+      <Input placeholder='Search term' value={searchTopic} onChange={hadleSearchTerm} />
+      <InfoContainer>
         <ListTopics searchTerm={searchTopic} />
-      </div>
-    </div>
+      </InfoContainer>
+    </Root>
   );
 };
 

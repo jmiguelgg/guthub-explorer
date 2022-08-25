@@ -10,7 +10,7 @@ interface ListTopicsProps {
   searchTerm: string;
 }
 
-const ListTopics = ({ searchTerm }: ListTopicsProps): JSX.Element => {
+const TopicsList = ({ searchTerm }: ListTopicsProps): JSX.Element => {
   const { loading, error, data } = useQuery<TopicResponse, TopicRequest>(
     GET_TOPICS,
     {
@@ -18,8 +18,8 @@ const ListTopics = ({ searchTerm }: ListTopicsProps): JSX.Element => {
     }
   );
 
-  if (loading) return <Spinner />;
-  else if (error) return <Text>An error occurred with the request</Text>;
+  if (loading) return <Spinner data-testid='TopicsList-Spinner' />;
+  else if (error) return <Text data-testid='TopicsList-Error' >An error occurred with the request</Text>;
   else if (
     data &&
     (data.topic === null || data.topic.relatedTopics.length === 0)
@@ -27,7 +27,7 @@ const ListTopics = ({ searchTerm }: ListTopicsProps): JSX.Element => {
     return <Text>No results found</Text>;
   } else {
     return (
-      <SubList>
+      <SubList data-testid='TopicsList-SubList'>
         {data?.topic?.relatedTopics.map((topic, index) => (
           <Topic key={`${topic.name}-${index}`} data={topic} />
         ))}
@@ -36,4 +36,4 @@ const ListTopics = ({ searchTerm }: ListTopicsProps): JSX.Element => {
   }
 };
 
-export default ListTopics;
+export default TopicsList;

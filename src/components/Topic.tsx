@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ITopic } from "../models/Topic";
-import ListTopics from "./ListTopics";
+import TopicsList from "./TopicsList";
 import { Row, Topic as STopic, Text, TipicContainer } from "./styles/Topic";
 
 interface TopicProps {
@@ -16,11 +16,11 @@ const Topic = ({ data }: TopicProps): JSX.Element => {
 
   return (
     <TipicContainer>
-      <Row isSelected={open} onClick={toggle}>
+      <Row isSelected={open} data-testid='Topic-Row' onClick={toggle}>
         <STopic>{data.name}</STopic>
-        <Text>Stargazers: {data.stargazerCount}</Text>
+        <Text data-testid='Topic-StargazersNumber'>Stargazers: {data.stargazerCount}</Text>
       </Row>
-      {open && <ListTopics searchTerm={data.name} />}
+      {open && <TopicsList data-testid='Topic-TopicList' searchTerm={data.name} />}
     </TipicContainer>
   );
 };

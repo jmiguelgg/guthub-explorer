@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ListTopics from '../components/ListTopics';
+import ListTopics from '../components/TopicsList';
 import { InfoContainer, Input, Root } from './styles/Home';
 
 const defaultSearchTerm = 'react';
